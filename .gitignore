@@ -1,3 +1,6 @@
+# app
+data/csv/crypto/*
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  simple-file-to-database-producer:
+   build: .
+   image: simple-file-to-database-producer:latest
+   volumes:
+      - ./data:/app/data
+   depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+  
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: postgres@postgres.com
+      PGADMIN_DEFAULT_PASSWORD: postgres
+    ports:
+      - "5050:80"
+    depends_on:       
+      - postgres
+
+volumes:
+  postgres-data:
+   
+
+# version: '3.8'
+
+# services:
+#   real-time-processor:
+#     build: .
+#     image: bitso-real-time-processor:latest
+#     environment:
+#       - POSTGRES_HOST=localhost  # Or host.docker.internal
+#       - POSTGRES_PORT=5432
+#       - POSTGRES_DB=bitso_db
+#       - POSTGRES_USER=bitso_user
+#       - POSTGRES_PASSWORD=bitso_pass
